@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sempre-Mais</title>
+    <link rel="stylesheet" href="css/style.min.css">
+
+
+    <style>
+        /* ======= MODO ALTO CONTRASTE ======= */
+        body.alto-contraste {
+            background-color: #000;
+            color: #fff;
+        }
+
+        body.alto-contraste header,
+        body.alto-contraste footer {
+            background-color: #000;
+            color: #fff;
+        }
+
+        body.alto-contraste a {
+            color: #00ffff;
+        }
+
+        body.alto-contraste button {
+            background-color: #fff;
+            color: #000;
+            border: 2px solid #00ffff;
+        }
+
+        body.alto-contraste img {
+            filter: brightness(0.8) contrast(1.2);
+        }
+
+        /* ======= BOTÃO DE CONTRASTE ======= */
+        #modo-contraste {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #000;
+            color: #fff;
+            border: 2px solid #fff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        #modo-contraste:focus {
+            outline: 3px solid #00ffff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- BOTÃO DE ACESSIBILIDADE -->
+    <button id="modo-contraste" aria-pressed="false" aria-label="Ativar ou desativar alto contraste">Alto Contraste</button>
+
+    <!-- HEADER -->
+    <header class="container" role="banner">
+        <div class="col-8">
+            <h1>Sempre-Mais</h1>
+        </div>
+        <div class="col-4">
+            <button class="menu-toggle" aria-label="Abrir menu de navegação">☰</button>
+            <nav role="navigation" aria-label="Menu principal">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="projetos.html">Projetos</a></li>
+                    <li><a href="cadastro.html">Cadastro</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CARROSSEL -->
+    <div class="carousel container">
+        <img src="images/sempre-mais.jpg" class="active" alt="Sempre-Mais">
+        <img src="images/caridade.jpg" alt="Caridade">
+        <img src="images/feliz.jpg" alt="Feliz">
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
+    </div>
+
+    <!-- CARDS DE PROJETOS -->
+    <section class="container cards-container">
+        <div class="col-4">
+            <div class="card">
+                <img src="images/sempre-mais.jpg" alt="Projeto Sempre-Mais">
+                <h3>Projeto Sempre-Mais <span class="badge">Alimentação</span></h3>
+                <p>Distribuição de alimentos para famílias.</p>
+                <button>Participar</button>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <img src="images/caridade.jpg" alt="Projeto Caridade">
+                <h3>Projeto Caridade <span class="badge">Saúde</span></h3>
+                <p>Fornecimento de medicamentos e atendimento básico.</p>
+                <button>Doar</button>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <img src="images/feliz.jpg" alt="Projeto Feliz">
+                <h3>Projeto Feliz <span class="badge">Vestimenta</span></h3>
+                <p>Entrega de roupas para pessoas em vulnerabilidade.</p>
+                <button>Participar</button>
+            </div>
+        </div>
+    </section>
+
+        <!-- FOOTER -->
+    <footer class="container" role="contentinfo">
+        <p>&copy; 2025 Sempre-Mais | Todos os direitos reservados.</p>
+    </footer>
+
+    
+    <!-- JS PRINCIPAL -->
+   <script defer src="js/main.min.js"></script>
+
+
+    <!-- FORMULÁRIO DE CADASTRO -->
+        <section class="container" aria-labelledby="titulo-cadastro">
+            <h2 id="titulo-cadastro">Cadastre-se para participar</h2>
+            <div class="col-6">
+                <form id="cadastro-form" aria-describedby="form-message">
+                    <label for="nome">Nome completo</label>
+                    <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
+
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="E-mail" required>
+
+                    <label for="telefone">Telefone</label>
+                    <input type="tel" id="telefone" name="telefone" placeholder="Telefone" required>
+
+                    <button type="submit">Enviar</button>
+                    <div id="form-message" role="status" aria-live="polite"></div>
+                </form>
+            </div>
+            <div class="col-6">
+                <img src="images/sempre-mais.jpg" alt="Pessoas recebendo informações sobre os projetos" style="width:100%; border-radius:8px;">
+            </div>
+        </section>
+    </main>
+
+       <script>
+        // ======= CARROSSEL =======
+        let current = 0;
+        const slides = document.querySelectorAll('.carousel img');
+        const total = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(img => img.classList.remove('active'));
+            slides[index].classList.add('active');
+        }
+
+        setInterval(() => {
+            current = (current + 1) % total;
+            showSlide(current);
+        }, 3000);
+
+        document.querySelector('.next').addEventListener('click', () => {
+            current = (current + 1) % total;
+            showSlide(current);
+        });
+
+        document.querySelector('.prev').addEventListener('click', () => {
+            current = (current - 1 + total) % total;
+            showSlide(current);
+        });
+
+        // ======= MODO ALTO CONTRASTE =======
+        const contrasteBtn = document.getElementById('modo-contraste');
+        contrasteBtn.addEventListener('click', () => {
+            document.body.classList.toggle('alto-contraste');
+            const ativo = document.body.classList.contains('alto-contraste');
+            contrasteBtn.setAttribute('aria-pressed', ativo);
+            contrasteBtn.textContent = ativo ? 'Modo padrão' : 'Alto Contraste';
+        });
+    </script>
+</body>
+</html>
+       
