@@ -72,7 +72,7 @@ Para publicar o site:
 O link ficará assim:
 
 ```
-https://seuusuario.github.io/sempre-mais/
+https://leandro756-bit.github.io/finalizando-o-Projeto-ONG/
 ```
 
 ---
